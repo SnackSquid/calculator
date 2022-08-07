@@ -28,10 +28,18 @@ function buttonValue(click) {
 // set the current operator
 function operatorValue(click) {
     click.stopPropagation();
-    currentOperator = this.id;
-    firstNumber = inputNumber;
-    updateCalculatorDisplayUpper();
-    clear();
+
+    if (firstNumber == "") {
+        currentOperator = this.id;
+        firstNumber = inputNumber;
+        updateCalculatorDisplayUpper();
+        clearLower();
+    }
+    else {
+        currentOperator = this.id;
+        updateCalculatorDisplayUpper();
+    }
+    
 }
 // perform the actual operation
 function operate(a, operator) {
@@ -42,7 +50,7 @@ function operate(a, operator) {
         return;
     }
 
-    else if (operator === 'add') {
+    else if (operator === '+') {
         add(first, second);
         updateCalculatorDisplayLower();
     }
@@ -52,7 +60,21 @@ function operate(a, operator) {
 // clear the calculator screen
 function clear() {
     inputNumber = "";
+    firstNumber = "";
+    currentOperator = "";
+    updateCalculatorDisplayUpper();
     updateCalculatorDisplayLower();
+}
+
+function clearLower() {
+    inputNumber = ""
+    updateCalculatorDisplayLower();
+}
+
+function clearUpper() {
+    firstNumber = ""
+    currentOperator = ""
+
 }
 
 function backspace() {
