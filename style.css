@@ -8,7 +8,7 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     justify-content: center;
     align-items: center;
-    background-color: #182E81;
+    background-color: #424242;
 }
 
 button {
@@ -16,9 +16,9 @@ button {
     flex: auto;
     justify-content: center;
     align-items: center;
-    border: 1px solid lightgray;
+    border: 5px solid rgb(45, 45, 45);
     box-sizing: border-box;
-    color: #182E81;
+    color: #424242;
     font-weight: 700;
     font-size: 36px;
     width: 20%;
@@ -31,9 +31,12 @@ button:hover{
 .calculatorBody {
     display: flex;
     flex-direction: column;
-    width: 40%;
-    height: 80%;
-    background-color: #182E81;
+    width: 45%;
+    height: 85%;
+    background-color: #71ab61;
+    box-sizing: border-box;
+    border:30px rgb(80, 82, 113) solid;
+    border-radius: 5%;
 }
 
 .calculatorDisplay {
@@ -42,12 +45,12 @@ button:hover{
     flex-direction: column;
     color: white;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 30px;
     justify-content: center;
     padding-right: 5%;
     box-sizing: border-box;
-    border: 4px white solid;
-    border-bottom: 1px lightgray solid;
+    border: 20px rgb(45, 45, 45) solid;
+    border-bottom: 10px rgb(45, 45, 45) solid;
 }
 
 .upperDisplay, .lowerDisplay {
@@ -58,13 +61,14 @@ button:hover{
 }
 
 .lowerDisplay {
-    font-size: 42px;
+    font-size: 36px;
 }
 
 .calculatorNums {
     display: flex;
     flex: auto;
     flex-direction: column;
+    border: 4px rgb(45, 45, 45) solid;
 }
 
 .row {
@@ -77,11 +81,19 @@ button:hover{
     background-color: orange;
 }
 
+#equals:hover {
+    background-color: #D37900;
+}
+
 #clear {
     background-color: red;
 }
 
-#zero {
+#clear:hover {
+    background-color: #BB0000;
+}
+
+[id='0'] {
     flex: 6 1 auto;
 }
 
