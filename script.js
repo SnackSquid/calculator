@@ -1,8 +1,7 @@
 // create variable to store user input
 let inputNumber = "";
 // variables to store subsequent input and operator
-let firstNumber = "";
-let secondNumber = "";
+let storedNumber = "";
 let currentOperator = "";
 
 // declare basic calculator functionality
@@ -20,11 +19,11 @@ function divide(a, b) {
         return "What are you doing???"
     }
     else {
-        return a / b;    
+        return a / b;
     }  
 }
 
-// add the value input into a string 
+// adds numbers to the calculator and updates the screen
 function buttonValue(click) {
     click.stopPropagation();
     inputNumber += this.id;
@@ -34,52 +33,53 @@ function buttonValue(click) {
 // set the current operator
 function operatorValue(click) {
     click.stopPropagation();
+    // if there is already a number stored let the user change the operator
+    if (storedNumber != "") {
+        currentOperator = this.id;
+        updateCalculatorDisplayUpper(storedNumber);
+    }
 
-    if (inputNumber == "") {
+    // make sure there is an original number before the calculator will attempt to assign it an operator
+    else if (inputNumber == "") {
         console.log('not doing it')
     }
-
-    else if (firstNumber == "") {
+    // make sure there is not a number stored, then store the number and operator
+    else if (storedNumber == "") {
         currentOperator = this.id;
-        firstNumber = inputNumber;
-        updateCalculatorDisplayUpper();
+        storedNumber = inputNumber;
+        updateCalculatorDisplayUpper(storedNumber);
         clearLower();
-    }
-   
-    else {
-        currentOperator = this.id;
-        updateCalculatorDisplayUpper();
     }
 }
 // perform the actual operation
 function operate() {
-    let first = parseInt(firstNumber, 10);
+    let first = parseInt(storedNumber, 10);
     let second = parseInt(inputNumber, 10);
-    let newNumber = 0;
 
     // make sure that there is a valid operator and valid second number
     if (currentOperator === '') return;
     else if (inputNumber == '') return;
 
     else if (currentOperator === '+') {
-        newNumber = add(first, second);
-        updateCalculatorDisplayLower(newNumber);
+        inputNumber = add(first, second);
+        updateCalculatorDisplayLower(inputNumber);
+        clearUpper();
     }
     else if (currentOperator === '-') {
-        newNumber = subtract(first, second);
-        updateCalculatorDisplayLower(newNumber);
+        inputNumber = subtract(first, second);
+        updateCalculatorDisplayLower(inputNumber);
+        clearUpper();
     }
     else if (currentOperator === 'x') {
-        newNumber = multiply(first, second);
-        updateCalculatorDisplayLower(newNumber);
+        inputNumber = multiply(first, second);
+        updateCalculatorDisplayLower(inputNumber);
+        clearUpper();
     }
     else if (currentOperator === '÷') {
-        newNumber = divide(first, second);
-        updateCalculatorDisplayLower(newNumber);
+        inputNumber = divide(first, second);
+        updateCalculatorDisplayLower(inputNumber);
+        clearUpper();
     }
-
-    clearUpper();
-
 }
 
 // clear the entire calculator screen
@@ -95,9 +95,9 @@ function clearLower() {
 }
 // clear just the upper section 
 function clearUpper() {
-    firstNumber = ""
+    storedNumber = ""
     currentOperator = ""
-    updateCalculatorDisplayUpper();
+    updateCalculatorDisplayUpper(storedNumber);
 }
 // makes the backspace work
 function backspace() {
@@ -114,9 +114,9 @@ function updateCalculatorDisplayLower(inputNumber) {
 }
 
 // update the current number with the first number displayed and operator displayed
-function updateCalculatorDisplayUpper() {
+function updateCalculatorDisplayUpper(storedNumber) {
     const calculatorDisplayUpper = document.querySelector('.upperDisplay');
-    calculatorDisplayUpper.textContent = `${firstNumber} ${currentOperator}`;
+    calculatorDisplayUpper.textContent = `${storedNumber} ${currentOperator}`;
 }
 
 function updateClearButton() {

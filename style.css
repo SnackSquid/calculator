@@ -31,16 +31,19 @@ button:hover{
 .calculatorBody {
     display: flex;
     flex-direction: column;
-    width: 45%;
-    height: 85%;
-    background-color: #71ab61;
-    box-sizing: border-box;
-    border:30px rgb(80, 82, 113) solid;
+    width: 35%;
+    height: 65%;
+    background-color: rgb(80, 82, 113);
+    
+    border:50px rgb(80, 82, 113) solid;
     border-radius: 5%;
+    box-shadow: 5px 5px 18px black;
 }
+
 
 .calculatorDisplay {
     display: flex;
+    background-color: #71ab61;
     height: 30%;
     flex-direction: column;
     color: white;
