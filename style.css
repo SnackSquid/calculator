@@ -97,5 +97,12 @@ button:hover{
     flex: 6 1 auto;
 }
 
+[id='÷'] {
+    flex: .16 1 auto;
+}
+
+#backspace {
+    flex: .16 1 auto;
+}
 
 

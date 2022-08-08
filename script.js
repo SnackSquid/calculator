@@ -16,76 +16,99 @@ function multiply(a, b) {
     return a * b;
 }
 function divide(a, b) {
-    return a / b;
+    if (b === 0){
+        return "What are you doing???"
+    }
+    else {
+        return a / b;    
+    }  
 }
 
 // add the value input into a string 
 function buttonValue(click) {
     click.stopPropagation();
     inputNumber += this.id;
-    updateCalculatorDisplayLower();
+    updateCalculatorDisplayLower(inputNumber);
+    updateClearButton();
 }
 // set the current operator
 function operatorValue(click) {
     click.stopPropagation();
 
-    if (firstNumber == "") {
+    if (inputNumber == "") {
+        console.log('not doing it')
+    }
+
+    else if (firstNumber == "") {
         currentOperator = this.id;
         firstNumber = inputNumber;
         updateCalculatorDisplayUpper();
         clearLower();
     }
+   
     else {
         currentOperator = this.id;
         updateCalculatorDisplayUpper();
     }
-    
 }
 // perform the actual operation
-function operate(a, operator) {
-    let first = parseInt(a, 10);
+function operate() {
+    let first = parseInt(firstNumber, 10);
     let second = parseInt(inputNumber, 10);
+    let newNumber = 0;
 
-    if (operator === '') {
-        return;
+    // make sure that there is a valid operator and valid second number
+    if (currentOperator === '') return;
+    else if (inputNumber == '') return;
+
+    else if (currentOperator === '+') {
+        newNumber = add(first, second);
+        updateCalculatorDisplayLower(newNumber);
+    }
+    else if (currentOperator === '-') {
+        newNumber = subtract(first, second);
+        updateCalculatorDisplayLower(newNumber);
+    }
+    else if (currentOperator === 'x') {
+        newNumber = multiply(first, second);
+        updateCalculatorDisplayLower(newNumber);
+    }
+    else if (currentOperator === '÷') {
+        newNumber = divide(first, second);
+        updateCalculatorDisplayLower(newNumber);
     }
 
-    else if (operator === '+') {
-        add(first, second);
-        updateCalculatorDisplayLower();
-    }
+    clearUpper();
 
 }
 
-// clear the calculator screen
+// clear the entire calculator screen
 function clear() {
-    inputNumber = "";
-    firstNumber = "";
-    currentOperator = "";
-    updateCalculatorDisplayUpper();
-    updateCalculatorDisplayLower();
+    clearLower();
+    clearUpper();
+    this.textContent = 'AC';
 }
-
+// clear just the lower section (inputNumber)
 function clearLower() {
     inputNumber = ""
-    updateCalculatorDisplayLower();
+    updateCalculatorDisplayLower(inputNumber);
 }
-
+// clear just the upper section 
 function clearUpper() {
     firstNumber = ""
     currentOperator = ""
-
+    updateCalculatorDisplayUpper();
 }
-
+// makes the backspace work
 function backspace() {
     let tempString = "";
     tempString = inputNumber.slice(0, -1);
     inputNumber = tempString;
-    updateCalculatorDisplayLower();
+    updateCalculatorDisplayLower(inputNumber);
 }
 
 // update the current number on the bottom
-function updateCalculatorDisplayLower() {
+function updateCalculatorDisplayLower(inputNumber) {
     const calculatorDisplayLower = document.querySelector('.lowerDisplay');
     calculatorDisplayLower.textContent = `${inputNumber}`;
 }
@@ -96,13 +119,18 @@ function updateCalculatorDisplayUpper() {
     calculatorDisplayUpper.textContent = `${firstNumber} ${currentOperator}`;
 }
 
+function updateClearButton() {
+    const clearButton = document.querySelector('.clear');
+    clearButton.textContent = 'C';
+}
+
 // get the number input for the calculator
-const calculatorButtons = document.querySelectorAll('.numberButton');
-calculatorButtons.forEach(button => button.addEventListener('click', buttonValue, {capture: false}));
+const calculatorNumberButtons = document.querySelectorAll('.numberButton');
+calculatorNumberButtons.forEach(button => button.addEventListener('click', buttonValue, {capture: false}));
 
 // get the operator 
-const calculatorOperator = document.querySelectorAll('.operatorButton');
-calculatorOperator.forEach(button => button.addEventListener('click', operatorValue, {capture: false}));
+const calculatorOperators = document.querySelectorAll('.operatorButton');
+calculatorOperators.forEach(button => button.addEventListener('click', operatorValue, {capture: false}));
 
 // clear button functionality
 const calculatorClear = document.querySelector('#clear');
@@ -111,3 +139,7 @@ calculatorClear.addEventListener('click', clear, {capture: false});
 // backspace button functionality
 const calculatorBackspace = document.querySelector('#backspace');
 calculatorBackspace.addEventListener('click', backspace, {capture: false});
+
+// equals button functionality
+const calculatorEquals = document.querySelector('#equals');
+calculatorEquals.addEventListener('click', operate, {capture: false});
