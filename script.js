@@ -33,12 +33,16 @@ function buttonValue(click) {
 // set the current operator
 function operatorValue(click) {
     click.stopPropagation();
+
+    if (storedNumber != "" && inputNumber != "") {
+        operate();
+    }
+
     // if there is already a number stored let the user change the operator
     if (storedNumber != "") {
         currentOperator = this.id;
         updateCalculatorDisplayUpper(storedNumber);
     }
-
     // make sure there is an original number before the calculator will attempt to assign it an operator
     else if (inputNumber == "") {
         console.log('not doing it')
@@ -101,10 +105,15 @@ function clearUpper() {
 }
 // makes the backspace work
 function backspace() {
-    let tempString = "";
-    tempString = inputNumber.slice(0, -1);
-    inputNumber = tempString;
-    updateCalculatorDisplayLower(inputNumber);
+    if (inputNumber.typeof != 'string') {
+        console.log("Can't do it yo")
+    }
+    else {
+        let tempString = "";
+        tempString = inputNumber.slice(0, -1);
+        inputNumber = tempString;
+        updateCalculatorDisplayLower(inputNumber);
+    }
 }
 
 // update the current number on the bottom
